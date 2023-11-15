@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 
 #include "main.h"
 #include "triangleSolver.h"
+#include "rectangleSolver.h"
 
 int side = 0;
 
@@ -15,7 +17,7 @@ int main() {
 
 		switch (shapeChoice)
 		{
-		case 2:
+		case 3:
 			printf_s("Rectangle selected.\n");
 			int rectangleSides[4] = { 0, 0, 0, 0 };
 			int* rectangleSidesPtr = getRectangleSides(rectangleSides);
@@ -33,24 +35,21 @@ int main() {
 			break;
 
 		case 2:
-			rintf_s("Angles selected.\n");
-			float a, b, c, A, B, C;
+			printf_s("Angles selected.\n");
+			float a, b, c;
 
 			printf("Enter the sides of the triangle (a b c): ");
-			if (scanf("%f %f %f", &a, &b, &c) != 3) {
+			if (scanf_s("%f %f %f", &a, &b, &c) != 3) {
 				fprintf(stderr, "Failed to read 3 numbers\n");
-				return 1;
+				return;
 			}
 
 			if (!isTriangle(a, b, c)) {
 				fprintf(stderr, "The sides %.2f, %.2f, %.2f do not form a valid triangle\n", a, b, c);
-				return 1;
+				return;
 			}
 
-			calculateAngles(a, b, c, &A, &B, &C);
-
-			printf("Sides:  %6.2f %6.2f %6.2f\n", a, b, c);
-			printf("Angles: %6.2f %6.2f %6.2f\n", A, B, C);
+			calculateAngles(a, b, c);
 
 			break;
 
@@ -74,9 +73,10 @@ void printWelcome() {
 }
 
 int printShapeMenu() {
-	printf_s("2. Rectangle\n");
+	
 	printf_s("1. Triangle\n");
 	printf_s("2. Angles\n");
+	printf_s("3. Rectangle\n");
 	printf_s("0. Exit\n");
 
 	int shapeChoice;
