@@ -24,8 +24,6 @@ char* analyzeTriangle(int side1, int side2, int side3) {
 		result = "Not a triangle";
 	}
 
-	// fix scalene triangles test cases^^^^^^ DO NOT MODIFY 
-
 	return result;
 }
 
