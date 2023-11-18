@@ -36,8 +36,8 @@ int main() {
 
 		case 2:
 			printf_s("Angles selected.\n");
-			float a, b, c;
-
+			float a, b, c, angleA, angleB, angleC;
+ 
 			printf("Enter the sides of the triangle (a b c): ");
 			if (scanf_s("%f %f %f", &a, &b, &c) != 3) {
 				fprintf(stderr, "Failed to read 3 numbers\n");
@@ -49,7 +49,7 @@ int main() {
 				return;
 			}
 
-			calculateAngles(a, b, c);
+			calculateAngles(a, b, c, &angleA, &angleB, &angleC);
 
 			break;
 

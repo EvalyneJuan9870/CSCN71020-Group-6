@@ -99,7 +99,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;C:\Users\steph\OneDrive\Desktop\CSCN71020 - TestSuites - Testcases\PolygonChecker\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Evaly\OneDrive\Desktop\New folder\PolygonChecker\x64\Debug;$(VCInstallDir)UnitTest\lib;C:\Users\steph\OneDrive\Desktop\CSCN71020 - TestSuites - Testcases\PolygonChecker\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>main.obj;triangleSolver.obj;rectangleSolver.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -172,6 +172,9 @@
     <ProjectReference Include="..\PolygonChecker\PolygonChecker.vcxproj">
       <Project>{2328fae1-a1bf-420f-9f0c-c7ccc7f13314}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

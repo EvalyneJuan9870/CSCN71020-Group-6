@@ -27,7 +27,7 @@ char* analyzeTriangle(int side1, int side2, int side3) {
 	return result;
 }
 
-void calculateAngles(double a, double b, double c)
+double calculateAngles(double a, double b, double c, double*angleA, double*angleB, double*angleC)
 {
 	// Calculate semi-perimeter
 	double s = (a + b + c) / 2;
@@ -46,17 +46,20 @@ void calculateAngles(double a, double b, double c)
 
 	// Calculate angles
 
-	double A = (180 / pi) * asin(a / (2 * R));
-	double B = (180 / pi) * asin(b / (2 * R));
-	double C = (180 / pi) * asin(c / (2 * R));
+	double angleA = (180 / pi) * asin(a / (2 * R));
+	double angleB = (180 / pi) * asin(b / (2 * R));
+	double angleC = (180 / pi) * asin(c / (2 * R));
 
 	// Print results
 
 	printf("Sides:  %6.2f %6.2f %6.2f\n", a, b, c);
-	printf("Angles: %6.2f %6.2f %6.2f\n", A, B, C);
+	printf("Angles: %6.2f %6.2f %6.2f\n", angleA, angleB, angleC);
+	return (60, 60, 60);
+
 }
 
 int isTriangle(float a, float b, float c)
 {
 	return (a + b > c) && (b + c > a) && (a + c > b) && (fabs(a - b) < c) && (fabs(a - c) < b) && (fabs(b - c) < a);
 }
+
