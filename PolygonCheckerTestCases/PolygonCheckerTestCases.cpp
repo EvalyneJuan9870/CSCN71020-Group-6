@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include <cassert>
 
 extern "C" char* analyzeTriangle(int side1, int side2, int side3);
 extern "C" int* getTriangleSides(int* triangleSides);
 extern "C" char* analyzeRectangle(int side1, int side2, int side3, int side4);
 extern "C" int* getRectangleSides(int* rectangleSides);
 extern "C" bool isRectangle(int side1, int side2, int side3, int side4);
-extern "C" void calculateAngles(double a, double b, double c);
+extern "C" double calculateAngles(double a, double b, double c, double*angleA, double*angleB, double*angleC);
 extern "C" int isTriangle(float a, float b, float c);
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -663,8 +664,128 @@ namespace PolygonCheckerTestCases
             Assert::AreEqual(expected, actual);
         };
 
+		// Triangle ngles unit test cases
+		TEST_METHOD(Analyze_Equilateral_Triangle_Test1)
+		{
+			double a = 5.0, b = 5.0, c = 5.0;
+			double angleA, angleB, angleC;
 
+			calculateAngles(a, b, c, &angleA, &angleB, &angleC);
 
+			assert(fabs(angleA - 60.0) < 0.0001);
+			assert(fabs(angleB - 60.0) < 0.0001);
+			assert(fabs(angleC - 60.0) < 0.0001);
+		};
 
-    };
-}
+		TEST_METHOD(Analyze_Right_Angled_Triangle_Test2)
+		{
+			double a = 3.0, b = 4.0, c = 5.0;
+			double angleA, angleB, angleC;
+			calculateAngles(a, b, c, &angleA, &angleB, &angleC);
+
+			assert(fabs(angleA - 37.30) < 0.01);
+			assert(fabs(angleA - 52.70) < 0.01);
+			assert(angleC == 90.0);
+		}
+
+		TEST_METHOD(Analyze_Isosceles_Triangle_Test3)
+		{
+			double a = 4.0, b = 4.0, c = 6.0;
+			double angleA, angleB, angleC;
+			calculateAngles(a, b, c, &angleA, &angleB, &angleC);
+
+			assert(fabs(angleA - angleB) < 0.001);
+		}
+
+		TEST_METHOD(Analyze_Scalene_Trianle_Test4)
+		{
+
+			double a = 3.0, b = 4.0, c = 5.0;
+			double angleA, angleB, angleC;
+			calculateAngles(a, b, c, &angleA, &angleB, &angleC);
+
+			void* expectedAngleA ="39";
+			void* expectedAngleB = "54";
+			void* expectedAngleC = "87";
+
+			assert(fabs(angleA - 39) < 0.001);
+			assert(fabs(angleB - 54) < 0.001);
+			assert(fabs(angleC - 87) < 0.001);
+		}
+
+		TEST_METHOD(Analyze_Invalid_Triangle_Test5)
+		{
+
+			double a = 2.0, b = 2.0, c = 4.0;
+			double angleA, angleB, angleC;
+
+			calculateAngles(a, b, c, &angleA, &angleB, &angleC);
+
+			assert(isNotAn(angleA));   //AngleA invalid Triangle therefore undefined
+			assert(isNoAn(angleB));    //AngleB invalid Triangle therefore undefined
+			assert(isNotAn(angleC));   //AngleC invalid Triangle therefore undefined
+
+		}
+
+		TEST_METHOD(Analyze_Negative_SideLengths_Test6)
+		{
+
+			double a = 2.0, b = -5.0, c = -8.0;
+			double angleA, angleB, angleC;
+
+			calculateAngles(a, b, c, &angleA, &angleB, &angleC);
+
+			assert(isNotAn(angleA));   //AngleA undefined for negative side length
+			assert(isNotAn(angleB));   //AngleB undefined for negative side length
+			assert(isNotAn(angleC));   //AngleC undefined for negative side length
+
+		TEST_METHOD(Analyze_StringInput_Test7)
+		{
+			double angleA, angleB, angleC;
+
+			calculateAngles("5.0", "6.0", "7.0", &anglesA, &angleB, &angleC);
+
+			assert(isNotAn(angleA));   //AngleA undefined for non-numeric inputs
+			assert(isNotAn(angleB));   //AngleB undefined for non-numeric inputs
+			assert(isNotAn(angleC));   //AngleC undefined for non-numeric inputs
+
+		}
+
+		TEST_METHOD(Invalid_Triangles_Test8)
+		{
+			double a = 1.0, b = 1.0, c = 3.0;
+			double angleA, angleB, angleC;
+
+			int result = calculateAngles(a, b, c, &angleA, &angleB, &angleC);
+
+			assert(result == 0); // Assuming the function returns 0 for an invalid triangle
+
+		};
+
+		TEST_METHOD(Analyze_Zero_SideLength_Test9)
+		{
+			double a = 0.0, b = 0.0, c = 0.0;
+			double angleA, angleB, angleC;
+
+			calculateAngles(a, b, c, &angleA, &angleB, &angleC);
+
+			assert(isNotAn(angleA));   //AngleA undefined for zero side length
+			assert(isNotAn(angleB));   //AngleB undefined for zero side length
+			assert(isNotAn(angleC));   //AngleC undefined for zero side length
+		}
+
+		TEST_METHOD(Analyze_greaterThan180SideLength_Test10)
+		{
+			double a = 190.7, b = 200.9, c = 1000.0;
+			double angleA, angleB, angleC;
+
+			calculateAngles(a, b, c, &angleA, &angleB, &angleC);
+
+			assert(isNotAn(angleA));   //AngleA undefined for greater than 180 Triangle
+			assert(isNotAn(angleB));   //AngleB undefined for greater than 180 Triangle
+			assert(isNotAn(angleC));   //AngleC undefined for greater than 180 Triangle
+		};
+
+	
+	};
+};
